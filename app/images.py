@@ -1,0 +1,1 @@
+# Here we will fetch the image content via Bing APIs and create frames
