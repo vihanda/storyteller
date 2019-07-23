@@ -57,7 +57,10 @@ def getImageForPhrase(phrase):
         'offset': '0',
         'mkt': 'en-in',
         'safeSearch': 'Moderate',
-        'imageType': 'Clipart'
+        'imageType': 'Clipart',
+        'size': 'medium',
+        'width': 400,
+        'height': 400
     })
 
     try:
@@ -113,6 +116,18 @@ def buildBody(sentence):
     docArr.append(document)
     body["documents"] = docArr
     return json.dumps(body)
+
+def downloadImg(url):
+    '''
+    This downloads image url to local directory with name same as the file name
+    '''
+
+    opener=urllib.request.build_opener()
+    opener.addheaders=[('User-Agent','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/36.0.1941.0 Safari/537.36')]
+    urllib.request.install_opener(opener)
+
+    local=url.split('/')[-1]
+    urllib.request.urlretrieve(url,local)
 
 def constructFrameData(rawText):
     """
