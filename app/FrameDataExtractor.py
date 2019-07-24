@@ -33,7 +33,7 @@ def extractPhrasesFromSentence(sentence):
         conn.close()
         return docArr[0]['keyPhrases']
     except Exception as e:
-        print("[Errno {0}] {1}".format(e.errno, e.strerror))
+        print("[Errno {0}]".format(e))
     ####################################
     return ""
 
@@ -52,10 +52,10 @@ def getImageForPhrase(phrase):
 
     params = urllib.parse.urlencode({
         # Request parameters
-        'q': phrase,
+        'q': phrase + "+site:unsplash.com",
         'count': '1',
         'offset': '0',
-        'mkt': 'en-in',
+        'mkt': 'en-us',
         'safeSearch': 'Moderate',
         'imageType': 'Clipart',
         'size': 'medium',
@@ -73,7 +73,7 @@ def getImageForPhrase(phrase):
         conn.close()
         return valArr[0]['contentUrl']
     except Exception as e:
-        print("[Errno {0}] {1}".format(e.errno, e.strerror))
+        print("[Errno {0}]".format(e))
     return ""
     ####################################
 
@@ -102,7 +102,7 @@ def getSentimentForSentence(sentence):
         conn.close()
         return docArr[0]['score']
     except Exception as e:
-        print("[Errno {0}] {1}".format(e.errno, e.strerror))
+        print("[Errno {0}]".format(e))
     ####################################
     return 0
 
@@ -159,6 +159,7 @@ def constructFrameData(rawText):
         for phrase in phrases:
             image = getImageForPhrase(phrase)
             imagesArr.append(image)
+            downloadImg(image)
         frame["images"] = imagesArr
         frame["phrases"] = phrases
 
@@ -169,7 +170,8 @@ def constructFrameData(rawText):
     return frameList
 
 
-text = "Everyone in my family liked the trail but thought it was too challenging for the less athletic among us. Not necessarily recommended for small children.We need a team to help us with all the paperwork"
+
+text = "We know that running your own business is rewarding.But sometimes the paperwork can be a drag! Meet Mathew.Matthew is very busy running his own business. Tax time always overwhelms him with paperwork.Paperwork from vendors, the IRS and customers to name a few.So Matthew searches online for a solution and discovers Acme Tax.Acme Tax offers solutions for managing payroll, monthly financial statements and IRS statement reviews.Now Matthew can focus less on paperwork and more on growing his business!"
 frameList = constructFrameData(text)
 pp = pprint.PrettyPrinter(indent=4)
 pp.pprint(frameList)
