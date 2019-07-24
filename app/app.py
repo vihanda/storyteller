@@ -16,5 +16,5 @@ def generateVideo():
     return 'JSON posted'
 
 
-if __name__ == '__main__':
-  app.run(debug=True)
+#if __name__ == '__main__':
+#  app.run(debug=True)
